@@ -99,3 +99,33 @@ export default {
   },
 };
 ```
+
+## Error handling
+```javascript
+export default {
+  namespace : 'counter',
+  state     : {
+    count: 0,
+  },
+  effects: {
+    *asyncAdd({ payload }, { put, call }, { delay }) {
+      yield call(delay, 1000);
+      throw 'some error';
+      yield put({ type: 'counter/add', payload });
+    },
+  },
+  catch: function*(err, action, { put }) {
+    console.log(err);
+    console.log(action);
+    yield put({ type: 'counter/add', payload });
+  },
+  reducers: {
+    add(state, { payload }) {
+      return { ...state, count: state.count + payload };
+    },
+  },
+  routes: {
+    '/': { component: Counter },
+  },
+};
+```

@@ -7,11 +7,15 @@ export default modules => {
   Object.keys(modules).forEach(namespace => {
     const { effects, catch: onCatch } = modules[namespace];
     const effectSagas = Object.keys(effects).map(type => {
-      const saga = function* (...args) {
+      const saga = function* (action) {
         try {
-          yield effects[type](...args.concat(sagaEffects, sagaHelper));
+          yield effects[type](action, sagaEffects, sagaHelper);
         } catch(err) {
-          onCatch({ err, type: prefixType(type, namespace) });
+          let error = err;
+          if(!(error instanceof Error)) {
+            error = new Error(error);
+          }
+          yield onCatch(error, action, sagaEffects, sagaHelper);
         }
       };
       const watcher = function* () {
