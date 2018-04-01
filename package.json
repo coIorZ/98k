@@ -1,0 +1,28 @@
+{
+  "name": "98k",
+  "version": "0.2.5",
+  "description": "lightweight wrapper based on react, redux, redux-saga and react-router-dom",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "redux",
+    "frontend",
+    "framework"
+  ],
+  "files": [
+    "dist"
+  ],
+  "author": "coiorz <coiorz1989@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-saga": "^0.16.0"
+  }
+}
