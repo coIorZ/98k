@@ -7,7 +7,7 @@ $ npm install --save 98k
 ```
 
 ## Quick start
-####`index.js`
+`index.js`
 ```javascript
 import Kar98k from '98k';
 import counter from './counter';
@@ -20,7 +20,7 @@ app.module(counter);
 app.start('#app');
 ```
 
-####`counter.js`
+`counter.js`
 ```javascript
 import React from 'react';
 import { connect } from '98k';
@@ -132,7 +132,8 @@ export default {
 
 ## Plugin
 you can add plugins via `app.use`. 
-####`index.js`
+
+`index.js`
 ```javascript
 import Kar98k from '98k';
 import loading from './loading';
@@ -146,9 +147,12 @@ app.use(loading())
 ```
 
 A plugin is just a function that gets two parameters: `injectReducer` and `injectEffect`.
+
 `injectReducer` is used to add extra reducers.
+
 `injectEffect` is basically used to add a higher-order function that wraps saga function.
-####`loading.js`
+
+`loading.js`
 ```javascript
 export default (injectReducer, injectEffect) => {
   const initialState = {};
@@ -186,6 +190,9 @@ export default (injectReducer, injectEffect) => {
 ```
 parameters of `injectEffect` are: 
 `saga` - the current saga function that is being triggered
+
 `module` - the module object that this saga belongs to
+
 `type` - type of the current action
+
 and saga helpers.
