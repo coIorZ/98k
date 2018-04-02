@@ -52,6 +52,14 @@ export default {
 ```
 actionType is the key properties of `reducers` prefixed by `namespace`.
 
+## Options
+```javascript
+const app = Kar98k({
+  router: 'hash', // 'hash','browser'
+  basename: '/',  // the baseUrl used in react-router
+});
+```
+
 ## Asynchronous action
 ```javascript
 const Counter = connect(state => state.counter)(({ dispatch, count }) => (
@@ -189,6 +197,7 @@ export default (injectReducer, injectEffect) => {
 }
 ```
 parameters of `injectEffect` are: 
+
 `saga` - the current saga function that is being triggered
 
 `module` - the module object that this saga belongs to

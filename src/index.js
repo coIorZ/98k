@@ -7,7 +7,8 @@ import getSaga from './getSaga';
 import getStore from './getStore';
 import { noop } from './utils';
 
-function Kar98k() {
+function Kar98k(opts) {
+  this.opts = Object.assign(defaultOpts, opts);
   this.modules = {};
   this.middlewares = [];
   this.reducers = {};
@@ -41,7 +42,7 @@ Kar98k.prototype.use = function(fn) {
 
 Kar98k.prototype.start = function(id) {
   const reducer = getReducer(this.modules, this.reducers);
-  const routes = getRoutes(this.modules);
+  const routes = getRoutes(this.modules, this.opts);
   const saga = getSaga(this.modules, this.effects);
   const store = getStore(reducer, this.middlewares);
   store.runSaga(saga);
@@ -51,6 +52,11 @@ Kar98k.prototype.start = function(id) {
     </Provider>,
     document.querySelector(id),
   );
+};
+
+const defaultOpts = {
+  router   : 'browser',
+  basename : '/',
 };
 
 const defaultModule = {
