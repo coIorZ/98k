@@ -1,10 +1,11 @@
 {
   "name": "98k",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "lightweight wrapper based on react, redux, redux-saga and react-router-dom",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d dist"
   },
   "keywords": [
     "react",
@@ -17,6 +18,13 @@
   ],
   "author": "coiorz <coiorz1989@gmail.com>",
   "license": "ISC",
+  "babel": {
+    "presets": [
+      "es2015",
+      "react",
+      "stage-0"
+    ]
+  },
   "dependencies": {
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
@@ -24,5 +32,12 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1"
   }
 }
