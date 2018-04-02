@@ -2,12 +2,14 @@ import * as sagaEffects from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 import { prefixType } from './utils.js';
 
-export default modules => {
+export default (modules, cbEffects) => {
   let sagas = [];
+
   Object.keys(modules).forEach(namespace => {
-    const { effects, catch: onCatch } = modules[namespace];
+    const module = modules[namespace];
+    const { effects, catch: onCatch } = module;
     const effectSagas = Object.keys(effects).map(type => {
-      const saga = function* (action) {
+      let saga = function* (action) {
         try {
           yield effects[type](action, sagaEffects, sagaHelper);
         } catch(err) {
@@ -18,6 +20,7 @@ export default modules => {
           yield onCatch(error, action, sagaEffects, sagaHelper);
         }
       };
+      saga = applyCb(cbEffects, saga, module, type);
       const watcher = function* () {
         yield sagaEffects.takeLatest(prefixType(type, namespace), saga);
       };
@@ -25,9 +28,17 @@ export default modules => {
     });
     sagas = [...sagas, ...effectSagas];
   });
+
   return function* () {
     yield sagaEffects.all(sagas);
   };
+};
+
+const applyCb = (fns, saga, module, type) => {
+  for(const fn of fns) {
+    saga = fn(saga, module, type, sagaEffects, sagaHelper);
+  }
+  return saga;
 };
 
 const sagaHelper = {

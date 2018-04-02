@@ -12,11 +12,11 @@ const handleActions = (handlers, initialState, namespace) => {
   return (state = initialState, action) => reducers.reduce((prev, r) => r(prev, action), state);
 };
 
-export default modules => {
+export default (modules, extraReducers) => {
   var ret = {};
   Object.keys(modules).forEach(namespace => {
     const { reducers, state } = modules[namespace];
     ret[namespace] = handleActions(reducers, state, namespace);
   });
-  return combineReducers(ret);
+  return combineReducers({ ...ret, ...extraReducers });
 };

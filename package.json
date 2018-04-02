@@ -1,6 +1,6 @@
 {
   "name": "98k",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "lightweight wrapper based on react, redux, redux-saga and react-router-dom",
   "main": "dist/index.js",
   "scripts": {
@@ -13,6 +13,7 @@
     "frontend",
     "framework"
   ],
+  "repository": "github:coiorz/98k",
   "files": [
     "dist"
   ],
