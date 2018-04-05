@@ -9,6 +9,7 @@ export default (modules, cbEffects) => {
     const module = modules[namespace];
     const { effects, catch: onCatch } = module;
     const effectSagas = Object.keys(effects).map(type => {
+      const preType = prefixType(type, namespace);
       let saga = function* (action) {
         try {
           yield effects[type](action, sagaEffects, sagaHelper);
@@ -20,9 +21,9 @@ export default (modules, cbEffects) => {
           yield onCatch(error, action, sagaEffects, sagaHelper);
         }
       };
-      saga = applyCb(cbEffects, saga, module, type);
+      saga = applyCb(cbEffects, saga, module, preType);
       const watcher = function* () {
-        yield sagaEffects.takeLatest(prefixType(type, namespace), saga);
+        yield sagaEffects.takeLatest(preType, saga);
       };
       return watcher();
     });
