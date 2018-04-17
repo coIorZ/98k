@@ -108,6 +108,24 @@ export default {
 };
 ```
 
+## Navigate routes programmatically
+```javascript
+export default {
+  namespace: 'example',
+  effects: {
+    *redirectToRoutes({ payload }, { call }, { history }) {
+      const { data } = call(services.someApi, payload);
+      if(data) {
+        history.push('/some/routes');
+      } else {
+        history.push('/other/routes');
+      }
+    },
+  },
+};
+```
+
+
 ## Error handling
 ```javascript
 export default {
