@@ -2,8 +2,9 @@ import * as sagaEffects from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 import { prefixType } from './utils.js';
 
-export default (modules, cbEffects) => {
+export default (modules, cbEffects, history) => {
   let sagas = [];
+  const helper = { ...sagaHelper, history };
 
   Object.keys(modules).forEach(namespace => {
     const module = modules[namespace];
@@ -12,13 +13,13 @@ export default (modules, cbEffects) => {
       const preType = prefixType(type, namespace);
       let saga = function* (action) {
         try {
-          yield effects[type](action, sagaEffects, sagaHelper);
+          yield effects[type](action, sagaEffects, helper);
         } catch(err) {
           let error = err;
           if(!(error instanceof Error)) {
             error = new Error(error);
           }
-          yield onCatch(error, action, sagaEffects, sagaHelper);
+          yield onCatch(error, action, sagaEffects, helper);
         }
       };
       saga = applyCb(cbEffects, saga, module, preType);

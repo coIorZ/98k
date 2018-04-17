@@ -5,6 +5,7 @@ import getReducer from './getReducer';
 import getRoutes from './getRoutes';
 import getSaga from './getSaga';
 import getStore from './getStore';
+import getHistory from './getHistory';
 import { noop } from './utils';
 
 function Kar98k(opts) {
@@ -41,9 +42,10 @@ Kar98k.prototype.use = function(fn) {
 };
 
 Kar98k.prototype.start = function(id) {
+  const history = getHistory(this.opts);
   const reducer = getReducer(this.modules, this.reducers);
-  const routes = getRoutes(this.modules, this.opts);
-  const saga = getSaga(this.modules, this.effects);
+  const routes = getRoutes(this.modules, history);
+  const saga = getSaga(this.modules, this.effects, history);
   const store = getStore(reducer, this.middlewares);
   store.runSaga(saga);
   ReactDOM.render(  

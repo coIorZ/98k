@@ -1,19 +1,15 @@
 import React from 'react';
-import { BrowserRouter, HashRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 
-export default (modules, opts) => {
+export default (modules, history) => {
   let ret = {};
   Object.keys(modules).forEach(namespace => {
     const { routes } = modules[namespace];
     ret = Object.assign(ret, routes);
   });
 
-  const { router, basename } = opts;
-  let Router = BrowserRouter;
-  if(router === 'hash') Router = HashRouter;
-
   return (
-    <Router basename={basename}>
+    <Router history={history}>
       <Switch>
         {Object.keys(ret).map(path => {
           const { exact = true, component } = ret[path];
