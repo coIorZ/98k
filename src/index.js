@@ -19,11 +19,13 @@ function Kar98k(opts) {
 export default (...args) => new Kar98k(...args);
 export { connect };
 
-Kar98k.prototype.module = function(module) {
-  const { namespace } = module;
-  if(!namespace) throw new Error('namespace required');
-  if(namespace in Object.keys(this.modules)) throw new Error('duplicate namespace');
-  this.modules[namespace] = Object.assign({}, defaultModule, module);
+Kar98k.prototype.module = function(...modules) {
+  for(const module of modules) {
+    const { namespace } = module;
+    if(!namespace) throw new Error('namespace required');
+    if(namespace in Object.keys(this.modules)) throw new Error('duplicate namespace');
+    this.modules[namespace] = Object.assign({}, defaultModule, module);
+  }
   return this;
 };
 

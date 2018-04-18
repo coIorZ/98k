@@ -1,6 +1,6 @@
 {
   "name": "98k",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "lightweight wrapper based on react, redux, redux-saga and react-router-dom",
   "main": "dist/index.js",
   "scripts": {
